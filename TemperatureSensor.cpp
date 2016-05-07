@@ -29,9 +29,18 @@ void TemperatureSensor::onGet(const HeaderOptions &headerOptions, const OCRepres
     if(errCode == OC_STACK_OK) {
         double value;
         representation.getValue(TEMPERATURE_RESOURCE_KEY, value);
-        cout << endl << endl << "Current temperature reading in Celsius: " << value << endl;
+        cout << "Current temperature reading in Celsius: " << value << endl;
+        cout << "Sensor information: " << endl;
+        cout << "\tURI: " << m_resourceHandle->uri() << "\n\tSID: " << m_resourceHandle->sid() << "\n\tHost: " << m_resourceHandle->host() << endl;
+        vector<string> intrf = m_resourceHandle->getResourceInterfaces();
+        cout << "\tInterfaces: " << endl;
+        for(int i=0; i< intrf.size();i++) cout << "\t\t" << intrf[i] << endl;
+
+        vector<string> types = m_resourceHandle->getResourceTypes();
+        cout << "\tTypes: " << endl;
+        for(int i=0; i< types.size();i++) cout << "\t\t" << types[i] << endl;
     } else {
-        cerr << endl << endl << "Error in GET response from temperature sensor resource" << endl;
+        cerr << endl << "Error in GET response from temperature sensor resource" << endl;
     }
 
 }

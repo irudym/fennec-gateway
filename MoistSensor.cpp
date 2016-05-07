@@ -9,9 +9,9 @@ void MoistSensor::onGet(const HeaderOptions &headerOptions, const OCRepresentati
     if(errCode == OC_STACK_OK) {
         double value;
         representation.getValue(MOIST_RESOURCE_KEY, value);
-        cout << endl << endl << "Current moist level in %: " << value << endl;
+        cout << "Current moist level in %: " << value << endl;
     } else {
-        cerr << endl << endl << "Error in GET response from temperature sensor resource" << endl;
+        cerr << endl << "Error in GET response from temperature sensor resource" << endl;
     }
 }
 
