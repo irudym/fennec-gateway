@@ -8,7 +8,7 @@ include_directories("../iotivity-1.1.0/resource/csdk/security/include" "../iotiv
 
 link_directories("~/dev/iotivity-1.1.0/out/linux/x86_64/release")
 
-set(SOURCE_FILES main.cpp GatewayClient.cpp GatewayClient.h)
+set(SOURCE_FILES main.cpp GatewayClient.cpp GatewayClient.h TemperatureSensor.cpp TemperatureSensor.h)
 add_executable(fennec_gtw ${SOURCE_FILES})
 
 target_link_libraries(fennec_gtw oc octbstack logger coap c_common ocsrm )

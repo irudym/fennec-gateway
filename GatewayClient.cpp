@@ -37,20 +37,20 @@ void GatewayClient::discoveredResource(shared_ptr<OCResource> Resource) {
             string resourceUri = Resource->uri();
             string hostAddress = Resource->host();
 
-            cout << "\nFound Resource" << endl << "Resource Types:" << endl;
+            //cout << "\nFound Resource" << endl << "Resource Types:" << endl;
             for (auto& resourceTypes : Resource->getResourceTypes())
             {
-                cout << "\t" << resourceTypes << endl;
+                //cout << "\t" << resourceTypes << endl;
             }
 
-            cout << "Resource Interfaces: " << endl;
+            //cout << "Resource Interfaces: " << endl;
             for (auto& resourceInterfaces : Resource->getResourceInterfaces())
             {
-                cout << "\t" << resourceInterfaces << endl;
+                //cout << "\t" << resourceInterfaces << endl;
             }
 
-            cout << "Resource uri: " << resourceUri << endl;
-            cout << "host: " << hostAddress << endl;
+            //cout << "Resource uri: " << resourceUri << endl;
+            //cout << "host: " << hostAddress << endl;
             /*
             if (resourceUri == TEMPERATURE_RESOURCE_ENDPOINT)
             {
@@ -65,6 +65,18 @@ void GatewayClient::discoveredResource(shared_ptr<OCResource> Resource) {
                 m_platformLED = make_shared<LED>(Resource);
             }
             */
+            if (resourceUri == TEMPERATURE1_RESOURCE_ENDPOINT || resourceUri == TEMPERATURE2_RESOURCE_ENDPOINT) {
+                cout << "Found temperature sensor";
+                shared_ptr<TemperatureSensor> m_temperatureSensor;
+                m_temperatureSensor = make_shared<TemperatureSensor>(Resource);
+                //add sensor to a map<id, resource>
+
+                m_temperatureSensor->get();
+
+            } else if (resourceUri == MOIST1_RESOURCE_ENDPOINT || resourceUri == MOIST2_RESOURCE_ENDPOINT){
+                cout << "Found moist sensor";
+            }
+
         }
     } catch (OCException& ex)
     {

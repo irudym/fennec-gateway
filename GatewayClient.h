@@ -13,6 +13,8 @@
 #include "OCPlatform.h"
 #include "OCResource.h"
 
+#include "TemperatureSensor.h"
+
 using namespace OC;
 using namespace std;
 
