@@ -30,6 +30,7 @@ void TemperatureSensor::onGet(const HeaderOptions &headerOptions, const OCRepres
         double value;
         representation.getValue(TEMPERATURE_RESOURCE_KEY, value);
         cout << "Current temperature reading in Celsius: " << value << endl;
+
         cout << "Sensor information: " << endl;
         cout << "\tURI: " << m_resourceHandle->uri() << "\n\tSID: " << m_resourceHandle->sid() << "\n\tHost: " << m_resourceHandle->host() << endl;
         vector<string> intrf = m_resourceHandle->getResourceInterfaces();

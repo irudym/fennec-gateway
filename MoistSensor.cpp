@@ -10,6 +10,16 @@ void MoistSensor::onGet(const HeaderOptions &headerOptions, const OCRepresentati
         double value;
         representation.getValue(MOIST_RESOURCE_KEY, value);
         cout << "Current moist level in %: " << value << endl;
+
+        cout << "Sensor information: " << endl;
+        cout << "\tURI: " << m_resourceHandle->uri() << "\n\tSID: " << m_resourceHandle->sid() << "\n\tHost: " << m_resourceHandle->host() << endl;
+        vector<string> intrf = m_resourceHandle->getResourceInterfaces();
+        cout << "\tInterfaces: " << endl;
+        for(int i=0; i< intrf.size();i++) cout << "\t\t" << intrf[i] << endl;
+
+        vector<string> types = m_resourceHandle->getResourceTypes();
+        cout << "\tTypes: " << endl;
+        for(int i=0; i< types.size();i++) cout << "\t\t" << types[i] << endl;
     } else {
         cerr << endl << "Error in GET response from temperature sensor resource" << endl;
     }
