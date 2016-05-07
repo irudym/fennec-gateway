@@ -58,13 +58,13 @@ void GatewayClient::discoveredResource(shared_ptr<OCResource> Resource) {
                 data_sensor = make_shared<TemperatureSensor>(Resource);
 
                 //TODO: the same as block below
-                if(m_mSensors.find(Resource->uri()) != m_mSensors.end()) {
+                if(m_mSensors.find(Resource->uri()) == m_mSensors.end()) {
                     //Add resource to the resource map hash
                     m_mSensors[Resource->uri()] = data_sensor;
                     data_sensor->get();
                 } else {
                     //the resrouce already in data set
-                    cout << "Resource " << Resource->uri() << "already in data set" <<endl;
+                    cout << "Resource " << Resource->uri() << " already in data set" <<endl;
                 }
 
             } else if (resourceUri == MOIST1_RESOURCE_ENDPOINT || resourceUri == MOIST2_RESOURCE_ENDPOINT){
@@ -72,13 +72,13 @@ void GatewayClient::discoveredResource(shared_ptr<OCResource> Resource) {
                 data_sensor = make_shared<MoistSensor>(Resource);
 
                 //TODO: the same as block above
-                if(m_mSensors.find(Resource->uri()) != m_mSensors.end()) {
+                if(m_mSensors.find(Resource->uri()) == m_mSensors.end()) {
                     //Add resource to the resource map hash
                     m_mSensors[Resource->uri()] = data_sensor;
                     data_sensor->get();
                 } else {
                     //the resrouce already in data set
-                    cout << "Resource " << Resource->uri() << "already in data set" <<endl;
+                    cout << "Resource " << Resource->uri() << " already in data set" <<endl;
                 }
             }
 
