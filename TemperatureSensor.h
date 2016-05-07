@@ -5,14 +5,13 @@
 #ifndef FENNECGATEWAY_TEMPERATURESENSOR_H
 #define FENNECGATEWAY_TEMPERATURESENSOR_H
 
+#include <string>
+#include <iostream>
+#include <memory>
 #include "ocstack.h"
 #include "OCApi.h"
 #include "OCPlatform.h"
 #include "OCResource.h"
-#include "ocpayload.h"
-#include <string>
-#include <iostream>
-#include <memory>
 
 using namespace std;
 using namespace OC;
