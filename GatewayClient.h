@@ -13,6 +13,7 @@
 #include "OCPlatform.h"
 #include "OCResource.h"
 
+#include "SensorResource.h"
 #include "TemperatureSensor.h"
 
 using namespace OC;
@@ -21,6 +22,7 @@ using namespace std;
 class GatewayClient {
     shared_ptr<PlatformConfig> m_platformConfig; //platform configuration
     FindCallback m_resourceDiscoveryCallback;    //callback binding
+    vector<shared_ptr<SensorResource>> m_vSensors;
 
 public:
     GatewayClient();

@@ -5,6 +5,8 @@
 #include "GatewayClient.h"
 #include "../iotivity-weeder/namedefs.h"
 
+#include "TemperatureSensor.h"
+#include "MoistSensor.h"
 
 static const char* SVR_DB_FILE_NAME = "./fennec_db_client.dat";
 
@@ -49,32 +51,18 @@ void GatewayClient::discoveredResource(shared_ptr<OCResource> Resource) {
                 //cout << "\t" << resourceInterfaces << endl;
             }
 
-            //cout << "Resource uri: " << resourceUri << endl;
-            //cout << "host: " << hostAddress << endl;
-            /*
-            if (resourceUri == TEMPERATURE_RESOURCE_ENDPOINT)
-            {
-                m_temperatureSensor = make_shared<TemperatureSensor>(Resource);
-            }
-            else if (resourceUri == LIGHT_RESOURCE_ENDPOINT)
-            {
-                m_ambientLightSensor = make_shared<AmbientLight>(Resource);
-            }
-            else if (resourceUri == LED_RESOURCE_ENDPOINT)
-            {
-                m_platformLED = make_shared<LED>(Resource);
-            }
-            */
+            shared_ptr<SensorResource> data_sensor(nullptr);
+
             if (resourceUri == TEMPERATURE1_RESOURCE_ENDPOINT || resourceUri == TEMPERATURE2_RESOURCE_ENDPOINT) {
-                cout << "Found temperature sensor";
-                shared_ptr<TemperatureSensor> m_temperatureSensor;
-                m_temperatureSensor = make_shared<TemperatureSensor>(Resource);
-                //add sensor to a map<id, resource>
-
-                m_temperatureSensor->get();
-
+                cout << "Found temperature sensor" << endl;
+                data_sensor = make_shared<TemperatureSensor>(Resource);
+                m_vSensors.push_back(data_sensor);
+                data_sensor->get();
             } else if (resourceUri == MOIST1_RESOURCE_ENDPOINT || resourceUri == MOIST2_RESOURCE_ENDPOINT){
-                cout << "Found moist sensor";
+                cout << "Found moist sensor" << endl;
+                data_sensor = make_shared<MoistSensor>(Resource);
+                m_vSensors.push_back(data_sensor);
+                data_sensor->get();
             }
 
         }

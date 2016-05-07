@@ -13,25 +13,24 @@
 #include "OCPlatform.h"
 #include "OCResource.h"
 
+#include "SensorResource.h"
+
 using namespace std;
 using namespace OC;
 
 /*
  * Description: Temprature sensor class
  */
-class TemperatureSensor {
-    shared_ptr<OCResource> m_resourceHandle;
+class TemperatureSensor : public SensorResource {
     OCRepresentation m_temperatureRepresentation;
-    GetCallback m_GETCallback;
-    void onGet(const HeaderOptions&, const OCRepresentation&, int);
-    bool m_isObserved;
-    //void onObserve(const HeaderOptions headerOptions, const OCRepresentation& rep, int eCode,
-    //               int sequenceNumber);
+protected:
+    virtual void onGet(const HeaderOptions&, const OCRepresentation&, int);
+    virtual void onObserve(const HeaderOptions headerOptions, const OCRepresentation& rep, int eCode, int sequenceNumber);
 
 public:
-    void get();
-    //void startObserve();
-    //void stopObserve();
+
+    virtual void get();
+
     TemperatureSensor(shared_ptr<OCResource> Resource);
     virtual ~TemperatureSensor();
 };

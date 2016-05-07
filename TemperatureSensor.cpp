@@ -36,6 +36,13 @@ void TemperatureSensor::onGet(const HeaderOptions &headerOptions, const OCRepres
 
 }
 
+void TemperatureSensor::onObserve(const HeaderOptions headerOptions, const OCRepresentation &rep, int eCode,
+                                  int sequenceNumber) {
+
+}
+
+
+
 
 
 
