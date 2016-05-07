@@ -18,7 +18,7 @@
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 /**
- * Description: Fennec Gateway - a service whihc collects data over OIC standart and send it to
+ * Description: Fennec Gateway - a service which collects data over OIC standart and send it to
  * a cloud server over MQTT protocol
  * MQTT allows to share data through NAT connectio as the gateway intiates the connection
  */
@@ -45,7 +45,12 @@ int main(int argc, char *argv[]) {
         return 0;
     }
     GatewayClient gateway;
-    gateway.findResource();
+    OCStackResult res = gateway.findResource();
+    if(res ==  OC_STACK_OK ) {
+	cout << "OK!" << endl;
+    } else {
+	cout << "Failed: " << res << endl;
+    }
 
     return 0;
 }

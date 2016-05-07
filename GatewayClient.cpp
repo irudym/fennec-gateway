@@ -3,7 +3,7 @@
 //
 
 #include "GatewayClient.h"
-#include "../weeder/namedefs.h"
+#include "../iotivity-weeder/namedefs.h"
 
 
 static const char* SVR_DB_FILE_NAME = "./fennec_db_client.dat";
@@ -26,7 +26,7 @@ void GatewayClient::initializePlatform() {
     OCPersistentStorage ps {client_open, fread, fwrite, fclose, unlink };
 
     m_platformConfig = make_shared<PlatformConfig>(ServiceType::InProc, ModeType::Client, "0.0.0.0",
-                                                   0, OC::QualityOfService::HighQos, &ps);
+                                                   0, OC::QualityOfService::HighQos);
     OCPlatform::Configure(*m_platformConfig);
     m_resourceDiscoveryCallback = bind(&GatewayClient::discoveredResource, this, placeholders::_1);
 }
@@ -76,7 +76,7 @@ OCStackResult GatewayClient::findResource() {
     int amount_of_resources = 0;
     string coap_multicast_discovery = string(OC_RSRVD_WELL_KNOWN_URI "?if=" EDISON_RESOURCE_INTERFACE);
     return OCPlatform::findResource("", coap_multicast_discovery.c_str(),  CT_DEFAULT, m_resourceDiscoveryCallback,
-                             OC::QualityOfService::HighQos);
+                             OC::QualityOfService::LowQos);
 }
 
 

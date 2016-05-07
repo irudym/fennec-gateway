@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++0x    CMakeFiles/fennec_gtw.dir/main.cpp.o CMakeFiles/fennec_gtw.dir/GatewayClient.cpp.o  -o fennec_gtw  -L/home/igor/dev/iotivity-1.1.0/out/linux/x86_64/release -rdynamic -loc -loctbstack -llogger -lcoap -lc_common -locsrm -Wl,-rpath,/home/igor/dev/iotivity-1.1.0/out/linux/x86_64/release 

@@ -1,0 +1,1 @@
+/home/igor/dev/fennec-gateway/build/CMakeFiles/fennec_gtw.dir
