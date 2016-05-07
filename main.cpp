@@ -25,6 +25,12 @@
 #include <iostream>
 #include <signal.h>
 #include <cstring>
+#include <map>
+#include <cstdlib>
+#include <pthread.h>
+#include <mutex>
+#include <condition_variable>
+
 
 #include "GatewayClient.h"
 
@@ -63,7 +69,7 @@ int main(int argc, char *argv[]) {
         std::unique_lock<std::mutex> lock(blocker);
         cv.wait(lock);
     } catch (OCException& e) {
-        oclog() << "Exception in main: "<<e.what();
+        cout << "Exception in main: "<<e.what();
     }
 
     return 0;
