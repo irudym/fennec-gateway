@@ -45,11 +45,25 @@ int main(int argc, char *argv[]) {
         return 0;
     }
     GatewayClient gateway;
-    OCStackResult res = gateway.findResource();
-    if(res ==  OC_STACK_OK ) {
-	cout << "OK!" << endl;
-    } else {
-	cout << "Failed: " << res << endl;
+
+    try {
+        OCStackResult res = gateway.findResource();
+        if (res == OC_STACK_OK) {
+            cout << "OK!" << endl;
+        } else {
+            cout << "Failed: " << res << endl;
+        }
+
+        // A condition variable will free the mutex it is given, then do a non-
+        // intensive block until 'notify' is called on it.  In this case, since we
+        // don't ever call cv.notify, this should be a non-processor intensive version
+        // of while(true);
+        std::mutex blocker;
+        std::condition_variable cv;
+        std::unique_lock<std::mutex> lock(blocker);
+        cv.wait(lock);
+    } catch (OCException& e) {
+        oclog() << "Exception in main: "<<e.what();
     }
 
     return 0;
