@@ -53,12 +53,14 @@ int main(int argc, char *argv[]) {
     GatewayClient gateway;
 
     try {
-        OCStackResult res = gateway.findResource();
-        if (res == OC_STACK_OK) {
-            cout << "OK!" << endl;
-        } else {
-            cout << "Failed: " << res << endl;
-        }
+        do {
+            OCStackResult res = gateway.findResource();
+            if (res == OC_STACK_OK) {
+                cout << "OK!" << endl;
+            } else {
+                cout << "Failed: " << res << endl;
+            }
+        } while (gateway.getResources().size() != 4);
 
         // A condition variable will free the mutex it is given, then do a non-
         // intensive block until 'notify' is called on it.  In this case, since we

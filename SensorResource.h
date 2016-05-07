@@ -33,6 +33,8 @@ public:
     virtual void get() = 0;
     //void startObserve();
     //void stopObserve();
+
+    shared_ptr<OCResource> getDescription() { return m_resourceHandle; }
 };
 
 

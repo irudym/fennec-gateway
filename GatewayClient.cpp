@@ -56,13 +56,30 @@ void GatewayClient::discoveredResource(shared_ptr<OCResource> Resource) {
             if (resourceUri == TEMPERATURE1_RESOURCE_ENDPOINT || resourceUri == TEMPERATURE2_RESOURCE_ENDPOINT) {
                 cout << "Found temperature sensor" << endl;
                 data_sensor = make_shared<TemperatureSensor>(Resource);
-                m_vSensors.push_back(data_sensor);
-                data_sensor->get();
+
+                //TODO: the same as block below
+                if(m_mSensors.find(Resource->uri()) != m_mSensors.end()) {
+                    //Add resource to the resource map hash
+                    m_mSensors[Resource->uri()] = data_sensor;
+                    data_sensor->get();
+                } else {
+                    //the resrouce already in data set
+                    cout << "Resource " << Resource->uri() << "already in data set" <<endl;
+                }
+
             } else if (resourceUri == MOIST1_RESOURCE_ENDPOINT || resourceUri == MOIST2_RESOURCE_ENDPOINT){
                 cout << "Found moist sensor" << endl;
                 data_sensor = make_shared<MoistSensor>(Resource);
-                m_vSensors.push_back(data_sensor);
-                data_sensor->get();
+
+                //TODO: the same as block above
+                if(m_mSensors.find(Resource->uri()) != m_mSensors.end()) {
+                    //Add resource to the resource map hash
+                    m_mSensors[Resource->uri()] = data_sensor;
+                    data_sensor->get();
+                } else {
+                    //the resrouce already in data set
+                    cout << "Resource " << Resource->uri() << "already in data set" <<endl;
+                }
             }
 
         }
@@ -78,6 +95,12 @@ OCStackResult GatewayClient::findResource() {
     return OCPlatform::findResource("", coap_multicast_discovery.c_str(),  CT_DEFAULT, m_resourceDiscoveryCallback,
                              OC::QualityOfService::LowQos);
 }
+
+TResourceMap GatewayClient::getResources() {
+    return m_mSensors;
+}
+
+
 
 
 

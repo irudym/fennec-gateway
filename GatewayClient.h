@@ -19,15 +19,18 @@
 using namespace OC;
 using namespace std;
 
+typedef map<string, shared_ptr<SensorResource>> TResourceMap;
 class GatewayClient {
     shared_ptr<PlatformConfig> m_platformConfig; //platform configuration
     FindCallback m_resourceDiscoveryCallback;    //callback binding
-    vector<shared_ptr<SensorResource>> m_vSensors;
+    TResourceMap m_mSensors;
 
 public:
     GatewayClient();
     virtual ~GatewayClient();
     OCStackResult findResource();
+
+    TResourceMap getResources();
 
 private:
     void initializePlatform();
