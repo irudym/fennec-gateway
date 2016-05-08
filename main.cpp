@@ -55,7 +55,8 @@ int main(int argc, char *argv[]) {
     try {
         int r_amount = 0;
         //find all four resources (2x temp, 2x moist)
-        do {
+        //do
+        {
             OCStackResult res = gateway.findResource();
             if (res == OC_STACK_OK) {
                 cout << "OK!" << endl;
@@ -64,7 +65,8 @@ int main(int argc, char *argv[]) {
                 cout << "Failed: " << res << endl;
             }
             usleep(5000);
-        } while (r_amount != 4);
+        }
+        //while (r_amount != 4);
 
         // A condition variable will free the mutex it is given, then do a non-
         // intensive block until 'notify' is called on it.  In this case, since we

@@ -19,11 +19,15 @@
 using namespace OC;
 using namespace std;
 
-typedef map<string, shared_ptr<SensorResource>> TResourceMap;
+typedef map<OCResourceIdentifier, shared_ptr<SensorResource>> TResourceMap;
+
 class GatewayClient {
     shared_ptr<PlatformConfig> m_platformConfig; //platform configuration
     FindCallback m_resourceDiscoveryCallback;    //callback binding
     TResourceMap m_mSensors;
+
+    std::mutex curResourceLock;
+    std::shared_ptr<OCResource> curResource;
 
 public:
     GatewayClient();

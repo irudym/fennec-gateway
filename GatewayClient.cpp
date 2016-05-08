@@ -36,6 +36,10 @@ void GatewayClient::initializePlatform() {
 void GatewayClient::discoveredResource(shared_ptr<OCResource> Resource) {
     try {
         if(Resource) {
+
+            std::lock_guard<std::mutex> lock(curResourceLock);
+
+
             string resourceUri = Resource->uri();
             string hostAddress = Resource->host();
 
@@ -53,14 +57,16 @@ void GatewayClient::discoveredResource(shared_ptr<OCResource> Resource) {
 
             shared_ptr<SensorResource> data_sensor(nullptr);
 
+
             if (resourceUri == TEMPERATURE1_RESOURCE_ENDPOINT || resourceUri == TEMPERATURE2_RESOURCE_ENDPOINT) {
                 cout << "Found temperature sensor" << endl;
                 data_sensor = make_shared<TemperatureSensor>(Resource);
 
+                
                 //TODO: the same as block below
-                if(m_mSensors.find(Resource->uri()) == m_mSensors.end()) {
+                if(m_mSensors.find(Resource->uniqueIdentifier()) == m_mSensors.end()) {
                     //Add resource to the resource map hash
-                    m_mSensors[Resource->uri()] = data_sensor;
+                    m_mSensors[Resource->uniqueIdentifier()] = data_sensor;
                     data_sensor->get();
                 } else {
                     //the resrouce already in data set
@@ -72,9 +78,9 @@ void GatewayClient::discoveredResource(shared_ptr<OCResource> Resource) {
                 data_sensor = make_shared<MoistSensor>(Resource);
 
                 //TODO: the same as block above
-                if(m_mSensors.find(Resource->uri()) == m_mSensors.end()) {
+                if(m_mSensors.find(Resource->uniqueIdentifier()) == m_mSensors.end()) {
                     //Add resource to the resource map hash
-                    m_mSensors[Resource->uri()] = data_sensor;
+                    m_mSensors[Resource->uniqueIdentifier()] = data_sensor;
                     data_sensor->get();
                 } else {
                     //the resrouce already in data set
