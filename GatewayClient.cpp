@@ -27,8 +27,12 @@ GatewayClient::~GatewayClient() {
 void GatewayClient::initializePlatform() {
     OCPersistentStorage ps {client_open, fread, fwrite, fclose, unlink };
 
-    m_platformConfig = make_shared<PlatformConfig>(ServiceType::InProc, ModeType::Client, "0.0.0.0",
-                                                   0, OC::QualityOfService::HighQos);
+    //m_platformConfig = make_shared<PlatformConfig>(ServiceType::InProc, ModeType::Client, CT_DEFAULT, "0.0.0.0",
+    //                                               0, OC::QualityOfService::HighQos);
+
+    m_platformConfig = make_shared<PlatformConfig>(ServiceType::InProc, ModeType::Client, CT_DEFAULT, CT_DEFAULT,
+                            OC::QualityOfService::HighQos);
+    
     OCPlatform::Configure(*m_platformConfig);
     m_resourceDiscoveryCallback = bind(&GatewayClient::discoveredResource, this, placeholders::_1);
 }
@@ -83,7 +87,7 @@ void GatewayClient::discoveredResource(shared_ptr<OCResource> Resource) {
                     m_mSensors[Resource->uniqueIdentifier()] = data_sensor;
                     data_sensor->get();
                 } else {
-                    //the resrouce already in data set
+                    //the resource is already in data set
                     cout << "Resource " << Resource->uri() << " already in data set" <<endl;
                 }
             }
