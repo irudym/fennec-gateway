@@ -62,14 +62,14 @@ void GatewayClient::discoveredResource(shared_ptr<OCResource> Resource) {
                 cout << "Found temperature sensor" << endl;
                 data_sensor = make_shared<TemperatureSensor>(Resource);
 
-                
+
                 //TODO: the same as block below
                 if(m_mSensors.find(Resource->uniqueIdentifier()) == m_mSensors.end()) {
                     //Add resource to the resource map hash
                     m_mSensors[Resource->uniqueIdentifier()] = data_sensor;
                     data_sensor->get();
                 } else {
-                    //the resrouce already in data set
+                    //the resource already in data set
                     cout << "Resource " << Resource->uri() << " already in data set" <<endl;
                 }
 
@@ -96,9 +96,9 @@ void GatewayClient::discoveredResource(shared_ptr<OCResource> Resource) {
 }
 
 OCStackResult GatewayClient::findResource() {
-    int amount_of_resources = 0;
     string coap_multicast_discovery = string(OC_RSRVD_WELL_KNOWN_URI);
-    return OCPlatform::findResource("", coap_multicast_discovery.c_str(),  CT_DEFAULT, m_resourceDiscoveryCallback,
+    //perform multicast search of all resources
+    return OCPlatform::findResource("", "",  CT_DEFAULT, m_resourceDiscoveryCallback,
                              OC::QualityOfService::LowQos);
 }
 
