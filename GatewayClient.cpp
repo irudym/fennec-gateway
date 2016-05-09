@@ -98,7 +98,7 @@ void GatewayClient::discoveredResource(shared_ptr<OCResource> Resource) {
 OCStackResult GatewayClient::findResource() {
     string coap_multicast_discovery = string(OC_RSRVD_WELL_KNOWN_URI);
     //perform multicast search of all resources
-    return OCPlatform::findResource("", "",  CT_DEFAULT, m_resourceDiscoveryCallback,
+    return OCPlatform::findResource("", coap_multicast_discovery.c_str(),  CT_DEFAULT, m_resourceDiscoveryCallback,
                              OC::QualityOfService::LowQos);
 }
 
