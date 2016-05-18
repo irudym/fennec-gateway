@@ -29,6 +29,9 @@ class GatewayClient {
     std::mutex curResourceLock;
     std::shared_ptr<OCResource> curResource;
 
+    const static ObserveType OBSERVE_TYPE_TO_USE = ObserveType::Observe;
+    ObservationIds m_interestedObservers;
+
 public:
     GatewayClient();
     virtual ~GatewayClient();

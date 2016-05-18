@@ -19,6 +19,9 @@ public:
     MoistSensor(shared_ptr<OCResource> Resource);
     virtual ~MoistSensor();
 
+    virtual void startObserve();
+    virtual void stopObserve();
+
 };
 
 

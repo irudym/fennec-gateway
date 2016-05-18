@@ -25,14 +25,16 @@ protected:
     shared_ptr<OCResource> m_resourceHandle;
 
     GetCallback m_GETCallback;
+    ObserveCallback m_OBSERVECallback;
+
     virtual void onGet(const HeaderOptions&, const OCRepresentation&, int) = 0;
     bool m_isObserved;
     virtual void onObserve(const HeaderOptions headerOptions, const OCRepresentation& rep, int eCode, int sequenceNumber) = 0;
 
 public:
     virtual void get() = 0;
-    //void startObserve();
-    //void stopObserve();
+    virtual void startObserve() = 0;
+    virtual void stopObserve() = 0;
 
     shared_ptr<OCResource> getDescription() { return m_resourceHandle; }
 };

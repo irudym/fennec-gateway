@@ -51,6 +51,18 @@ void MoistSensor::get() {
     m_resourceHandle->get(params, m_GETCallback);
 }
 
+void MoistSensor::startObserve() {
+
+}
+
+void MoistSensor::stopObserve() {
+
+}
+
+
+
+
+
 
 
 

@@ -31,6 +31,9 @@ public:
 
     virtual void get();
 
+    virtual void startObserve();
+    virtual void stopObserve();
+
     TemperatureSensor(shared_ptr<OCResource> Resource);
     virtual ~TemperatureSensor();
 };

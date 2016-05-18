@@ -8,6 +8,8 @@
 #include "TemperatureSensor.h"
 #include "MoistSensor.h"
 
+#define _DEBUG_
+
 static const char* SVR_DB_FILE_NAME = "./fennec_db_client.dat";
 
 static FILE* client_open(const char* /*path*/, const char *mode)
@@ -27,17 +29,34 @@ GatewayClient::~GatewayClient() {
 void GatewayClient::initializePlatform() {
     OCPersistentStorage ps {client_open, fread, fwrite, fclose, unlink };
 
-    //m_platformConfig = make_shared<PlatformConfig>(ServiceType::InProc, ModeType::Client, CT_DEFAULT, "0.0.0.0",
-    //                                               0, OC::QualityOfService::HighQos);
+    m_platformConfig = make_shared<PlatformConfig>(ServiceType::InProc, ModeType::Client, "0.0.0.0",
+                                                  0, OC::QualityOfService::HighQos);
 
-    m_platformConfig = make_shared<PlatformConfig>(ServiceType::InProc, ModeType::Client, CT_DEFAULT, CT_DEFAULT,
-                            OC::QualityOfService::HighQos);
+    //m_platformConfig = make_shared<PlatformConfig>(ServiceType::InProc, ModeType::Client, CT_DEFAULT, CT_DEFAULT,
+    //                        OC::QualityOfService::HighQos);
     
     OCPlatform::Configure(*m_platformConfig);
     m_resourceDiscoveryCallback = bind(&GatewayClient::discoveredResource, this, placeholders::_1);
 }
 
 void GatewayClient::discoveredResource(shared_ptr<OCResource> Resource) {
+
+    //DEBUG:
+#ifdef _DEBUG_
+    cout << "Get response!" << endl;
+    if(Resource) {
+        cout <<"DEBUG: found resource:" <<endl;
+        cout <<"\tURI: " << Resource->uri() << endl;
+        cout <<"\tHost: " << Resource->host() << endl;
+        cout <<"\tResources types:" << endl;
+        for (auto& resourceTypes : Resource->getResourceTypes())
+        {
+            cout << "\t\t" << resourceTypes << endl;
+        }
+    }
+#endif
+
+
     try {
         if(Resource) {
 
