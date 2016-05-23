@@ -7,6 +7,8 @@
 
 #include "SensorResource.h"
 
+#include "MQTTAsync.h"
+
 class MoistSensor : public SensorResource {
     OCRepresentation m_moistRepresentation;
 protected:
@@ -16,7 +18,7 @@ protected:
 public:
     virtual void get();
 
-    MoistSensor(shared_ptr<OCResource> Resource);
+    MoistSensor(shared_ptr<OCResource> Resource, shared_ptr<mqtt::async_client> mqtt_client, string);
     virtual ~MoistSensor();
 
     virtual void startObserve();

@@ -16,6 +16,9 @@
 #include "SensorResource.h"
 #include "TemperatureSensor.h"
 
+#include "MQTTCallback.h"
+#include "MQTTDeliveryActionListener.h"
+
 using namespace OC;
 using namespace std;
 
@@ -32,8 +35,12 @@ class GatewayClient {
     const static ObserveType OBSERVE_TYPE_TO_USE = ObserveType::Observe;
     ObservationIds m_interestedObservers;
 
+    MQTTCallback m_MqttCallback;
+    shared_ptr<mqtt::async_client> m_MqttClient;
+    string m_MqttTopic;
+
 public:
-    GatewayClient();
+    GatewayClient(string mqtt_server, string client_id);
     virtual ~GatewayClient();
     OCStackResult findResource();
 

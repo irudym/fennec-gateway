@@ -34,7 +34,7 @@ public:
     virtual void startObserve();
     virtual void stopObserve();
 
-    TemperatureSensor(shared_ptr<OCResource> Resource);
+    TemperatureSensor(shared_ptr<OCResource> Resource, shared_ptr<mqtt::async_client> m_MqttClient, string);
     virtual ~TemperatureSensor();
 };
 

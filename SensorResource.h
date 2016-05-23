@@ -12,6 +12,7 @@
 #include "OCApi.h"
 #include "OCPlatform.h"
 #include "OCResource.h"
+#include "mqtt/async_client.h"
 
 using namespace std;
 using namespace OC;
@@ -26,6 +27,8 @@ protected:
 
     GetCallback m_GETCallback;
     ObserveCallback m_OBSERVECallback;
+    shared_ptr<mqtt::async_client> m_MqttClient;
+    string m_MqttTopic;
 
     virtual void onGet(const HeaderOptions&, const OCRepresentation&, int) = 0;
     bool m_isObserved;

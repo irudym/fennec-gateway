@@ -6,9 +6,11 @@
 #include "../iotivity-weeder/namedefs.h"
 
 
-TemperatureSensor::TemperatureSensor(shared_ptr<OCResource> Resource) {
+TemperatureSensor::TemperatureSensor(shared_ptr<OCResource> Resource, shared_ptr<mqtt::async_client> mqtt_client, string topic) {
     m_isObserved = false;
     m_resourceHandle = Resource;
+    m_MqttClient = mqtt_client;
+    m_MqttTopic = topic;
 
     cout << "Added sensor: " << Resource->uri() << endl;
 
@@ -53,16 +55,21 @@ void TemperatureSensor::onObserve(const HeaderOptions headerOptions, const OCRep
         {
             if(sequenceNumber == OC_OBSERVE_REGISTER)
             {
-                cout << "Observe registration action is successful" << endl;
+                //cout << "Observe registration action is successful" << endl;
             }
             else if(sequenceNumber == OC_OBSERVE_DEREGISTER)
             {
-                cout << "Observe De-registration action is successful" << endl;
+                //cout << "Observe De-registration action is successful" << endl;
             }
             double value;
             rep.getValue(TEMPERATURE_RESOURCE_KEY, value);
-            cout << "Observing TemperatureSensor: Current temperature reading in Celsius is " << value << endl;
-            cout << "Sequence number: " << sequenceNumber << endl;
+            cout << "["<< sequenceNumber <<"]::" << "Observing " << m_resourceHandle->uri() << ": Current temperature reading in Celsius is " << value << endl;
+
+            auto value_str = std::to_string(value);
+            mqtt::message_ptr pubmsg = std::make_shared<mqtt::message>("{\"d\":{\"temperature\":" + value_str + "}}");
+            pubmsg->set_qos(1);
+            m_MqttClient->publish(m_MqttTopic, pubmsg)->wait_for_completion(10000L);
+            std::cout << "OK" << std::endl;
         }
         else
         {
@@ -77,14 +84,15 @@ void TemperatureSensor::onObserve(const HeaderOptions headerOptions, const OCRep
         }
     } catch (std::exception& e)
     {
-        std::cout << "Exception: " << e.what() << " in onObserve" << std::endl;
+        std::cout << "[TemperatureSensor]::Exception: " << e.what() << " in onObserve" << std::endl;
     }
 }
 
 void TemperatureSensor::startObserve() {
+    cout << "[TemperatureSensor]::startObserver() for " << m_resourceHandle->uri() << endl;
     if (!m_isObserved)
     {
-        cout << "Starting observing temperature sensor" << endl;
+        cout << "\tStarting observing temperature sensor" << endl;
         m_resourceHandle->observe(ObserveType::Observe, QueryParamsMap(), m_OBSERVECallback);
     }
     m_isObserved = true;
@@ -94,7 +102,7 @@ void TemperatureSensor::stopObserve() {
     if (m_isObserved)
     {
         m_resourceHandle->cancelObserve();
-        cout << "Stopped observing temperature sensor" << endl;
+        cout << "\tStopped observing temperature sensor" << endl;
     }
     m_isObserved = false;
 }

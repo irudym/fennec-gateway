@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
         }
         return 0;
     }
-    GatewayClient gateway;
+    GatewayClient gateway("fennec.tech:1883","fennec_gateway_01234");
 
     try {
         int r_amount = 0;
@@ -65,16 +65,10 @@ int main(int argc, char *argv[]) {
                 cout << "Failed: " << res << endl;
             }
             usleep(5000);
-        } while (r_amount != 4);
+            r_amount++;
+        } while (r_amount < 4);
 
         cout <<"OK! Found " << r_amount << "resources." << endl;
-
-        cout << "Start observing the resources" << endl;
-
-        for(TResourceMap::iterator iterator = gateway.getResources().begin(); iterator != gateway.getResources().end(); iterator++) {
-            // iterator->first = key
-            iterator->second->startObserve();
-        }
 
         // A condition variable will free the mutex it is given, then do a non-
         // intensive block until 'notify' is called on it.  In this case, since we

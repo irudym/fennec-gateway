@@ -17,9 +17,26 @@ static FILE* client_open(const char* /*path*/, const char *mode)
     return fopen(SVR_DB_FILE_NAME, mode);
 }
 
-GatewayClient::GatewayClient() {
+GatewayClient::GatewayClient(string mqtt_server, string client_id) {
     cout << "Initializing Fennec Gateway" << endl;
     initializePlatform();
+
+    //setup MQTT
+    m_MqttClient = make_shared<mqtt::async_client>(mqtt_server, client_id);
+    m_MqttClient->set_callback(m_MqttCallback);
+
+    m_MqttTopic = "IOT/fennec:1234567890/data";
+
+    //connect to the MQTT server
+    try {
+        mqtt::itoken_ptr conntok = m_MqttClient->connect();
+        std::cout << "Waiting for the connection..." << std::flush;
+        conntok->wait_for_completion();
+        std::cout << "OK" << std::endl;
+    } catch(const mqtt::exception& exc) {
+            std::cerr << "Error: " << exc.what() << std::endl;
+    }
+
 }
 
 GatewayClient::~GatewayClient() {
@@ -83,7 +100,9 @@ void GatewayClient::discoveredResource(shared_ptr<OCResource> Resource) {
 
             if (resourceUri == TEMPERATURE1_RESOURCE_ENDPOINT || resourceUri == TEMPERATURE2_RESOURCE_ENDPOINT) {
                 cout << "Found temperature sensor" << endl;
-                data_sensor = make_shared<TemperatureSensor>(Resource);
+                string topic = "IOT/fennec1:fennec1/data";
+                if(resourceUri == TEMPERATURE2_RESOURCE_ENDPOINT) topic = "IOT/fennec2:fennec2/data";
+                data_sensor = make_shared<TemperatureSensor>(Resource, m_MqttClient, topic);
 
 
                 //TODO: the same as block below
@@ -91,6 +110,8 @@ void GatewayClient::discoveredResource(shared_ptr<OCResource> Resource) {
                     //Add resource to the resource map hash
                     m_mSensors[Resource->uniqueIdentifier()] = data_sensor;
                     data_sensor->get();
+                    // start observing
+                    data_sensor->startObserve();
                 } else {
                     //the resource already in data set
                     cout << "Resource " << Resource->uri() << " already in data set" <<endl;
@@ -98,13 +119,17 @@ void GatewayClient::discoveredResource(shared_ptr<OCResource> Resource) {
 
             } else if (resourceUri == MOIST1_RESOURCE_ENDPOINT || resourceUri == MOIST2_RESOURCE_ENDPOINT){
                 cout << "Found moist sensor" << endl;
-                data_sensor = make_shared<MoistSensor>(Resource);
+
+                string topic = "IOT/fennec1:fennec1/data";
+                if(resourceUri == MOIST2_RESOURCE_ENDPOINT) topic = "IOT/fennec2:fennec2/data";
+                data_sensor = make_shared<MoistSensor>(Resource, m_MqttClient,topic);
 
                 //TODO: the same as block above
                 if(m_mSensors.find(Resource->uniqueIdentifier()) == m_mSensors.end()) {
                     //Add resource to the resource map hash
                     m_mSensors[Resource->uniqueIdentifier()] = data_sensor;
                     data_sensor->get();
+                    data_sensor->startObserve();
                 } else {
                     //the resource is already in data set
                     cout << "Resource " << Resource->uri() << " already in data set" <<endl;

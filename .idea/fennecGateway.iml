@@ -2,23 +2,29 @@
 <module type="CPP_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/SensorResource.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/MoistSensor.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/MQTTDeliveryActionListener.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/MQTTCallback.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/GatewayClient.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/MQTTActiveListener.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TemperatureSensor.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/MQTTActiveListener.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/TemperatureSensor.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/MoistSensor.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/GatewayClient.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/MoistSensor.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/TemperatureSensor.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/MoistSensor.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/GatewayClient.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/SensorResource.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/GatewayClient.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/MQTTDeliveryActionListener.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/MQTTCallback.cpp" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library name="Header Search Paths">
         <CLASSES>
-          <root url="file:///usr/include" />
           <root url="file:///usr/lib/gcc/x86_64-linux-gnu/5/include" />
           <root url="file:///usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+          <root url="file:///usr/include" />
           <root url="file:///usr/local/include" />
           <root url="file://$MODULE_DIR$/../iotivity-1.1.0/resource/csdk/security/include" />
           <root url="file://$MODULE_DIR$/../iotivity-1.1.0/resource/csdk/stack/include" />
@@ -26,11 +32,12 @@
           <root url="file://$MODULE_DIR$/../iotivity-1.1.0/resource/include" />
           <root url="file://$MODULE_DIR$/../iotivity-1.1.0/resource/c_common" />
           <root url="file://$MODULE_DIR$/../iotivity-1.1.0/resource/oc_logger/include" />
+          <root url="file://$MODULE_DIR$/../paho.mqtt.cpp/src" />
         </CLASSES>
         <SOURCES>
-          <root url="file:///usr/include" />
           <root url="file:///usr/lib/gcc/x86_64-linux-gnu/5/include" />
           <root url="file:///usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+          <root url="file:///usr/include" />
           <root url="file:///usr/local/include" />
           <root url="file://$MODULE_DIR$/../iotivity-1.1.0/resource/csdk/security/include" />
           <root url="file://$MODULE_DIR$/../iotivity-1.1.0/resource/csdk/stack/include" />
@@ -38,6 +45,7 @@
           <root url="file://$MODULE_DIR$/../iotivity-1.1.0/resource/include" />
           <root url="file://$MODULE_DIR$/../iotivity-1.1.0/resource/c_common" />
           <root url="file://$MODULE_DIR$/../iotivity-1.1.0/resource/oc_logger/include" />
+          <root url="file://$MODULE_DIR$/../paho.mqtt.cpp/src" />
         </SOURCES>
       </library>
     </orderEntry>
