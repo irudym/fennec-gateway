@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
     try {
         int r_amount = 0;
         //find all four resources (2x temp, 2x moist)
-        do
+        for(int i=0;i<2;i++)
         {
             OCStackResult res = gateway.findResource();
             if (res == OC_STACK_OK) {
@@ -65,8 +65,8 @@ int main(int argc, char *argv[]) {
                 cout << "Failed: " << res << endl;
             }
             usleep(5000);
-            r_amount++;
-        } while (r_amount < 4);
+            //r_amount++;
+        } //while (r_amount < 4);
 
         cout <<"OK! Found " << r_amount << "resources." << endl;
 

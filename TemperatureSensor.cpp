@@ -65,7 +65,7 @@ void TemperatureSensor::onObserve(const HeaderOptions headerOptions, const OCRep
             rep.getValue(TEMPERATURE_RESOURCE_KEY, value);
             cout << "["<< sequenceNumber <<"]::" << "Observing " << m_resourceHandle->uri() << ": Current temperature reading in Celsius is " << value << endl;
 
-            auto value_str = std::to_string(value);
+            auto value_str = std::to_string(value-15);
             mqtt::message_ptr pubmsg = std::make_shared<mqtt::message>("{\"d\":{\"temperature\":" + value_str + "}}");
             pubmsg->set_qos(1);
             m_MqttClient->publish(m_MqttTopic, pubmsg)->wait_for_completion(10000L);

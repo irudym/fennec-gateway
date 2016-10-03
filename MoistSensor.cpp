@@ -62,8 +62,11 @@ void MoistSensor::onObserve(const HeaderOptions headerOptions, const OCRepresent
 
             //send data over MQTT
             // {d:{type_1: value_1, type_2: value_2, ... }}
-            auto value_str = std::to_string(value);
-            mqtt::message_ptr pubmsg = std::make_shared<mqtt::message>("{\"d\":{\"moist\":" + value_str + "}}");
+            double percent = value/730*100;
+            if(percent>100) percent = 100;
+            auto value_str = std::to_string(percent);
+
+            mqtt::message_ptr pubmsg = std::make_shared<mqtt::message>("{\"d\":{\"humidity\":" + value_str + "}}");
             pubmsg->set_qos(1);
             m_MqttClient->publish(m_MqttTopic, pubmsg)->wait_for_completion(10000L);
             std::cout << "OK" << std::endl;

@@ -100,8 +100,8 @@ void GatewayClient::discoveredResource(shared_ptr<OCResource> Resource) {
 
             if (resourceUri == TEMPERATURE1_RESOURCE_ENDPOINT || resourceUri == TEMPERATURE2_RESOURCE_ENDPOINT) {
                 cout << "Found temperature sensor" << endl;
-                string topic = "IOT/fennec1:fennec1/data";
-                if(resourceUri == TEMPERATURE2_RESOURCE_ENDPOINT) topic = "IOT/fennec2:fennec2/data";
+                string topic = "IOT/sensor1:2323/data";
+                if(resourceUri == TEMPERATURE2_RESOURCE_ENDPOINT) topic = "IOT/sensor2:4545/data";
                 data_sensor = make_shared<TemperatureSensor>(Resource, m_MqttClient, topic);
 
 
@@ -120,8 +120,8 @@ void GatewayClient::discoveredResource(shared_ptr<OCResource> Resource) {
             } else if (resourceUri == MOIST1_RESOURCE_ENDPOINT || resourceUri == MOIST2_RESOURCE_ENDPOINT){
                 cout << "Found moist sensor" << endl;
 
-                string topic = "IOT/fennec1:fennec1/data";
-                if(resourceUri == MOIST2_RESOURCE_ENDPOINT) topic = "IOT/fennec2:fennec2/data";
+                string topic = "IOT/sensor1:2323/data";
+                if(resourceUri == MOIST2_RESOURCE_ENDPOINT) topic = "IOT/sensor2:4545/data";
                 data_sensor = make_shared<MoistSensor>(Resource, m_MqttClient,topic);
 
                 //TODO: the same as block above
